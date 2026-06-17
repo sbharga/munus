@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Munus — Saved Jobs</title>
+  <link rel="stylesheet" href="jobs.css">
+</head>
+<body>
+  <header class="page-header">
+    <div class="brand">
+      <span class="title">Munus</span>
+    </div>
+    <div class="header-right">
+      <span id="job-count" class="job-count"></span>
+      <button id="open-settings" class="icon-btn" title="Settings">&#9881;</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="filter-bar">
+      <input type="search" id="search-input" placeholder="Search role or company…">
+      <button id="delete-selected-btn" class="delete-selected-btn hidden">Delete</button>
+      <select id="status-filter">
+        <option value="">All statuses</option>
+        <option value="saved">Saved</option>
+        <option value="applied">Applied</option>
+        <option value="interviewing">Interviewing</option>
+        <option value="offered">Offered</option>
+        <option value="rejected">Rejected</option>
+      </select>
+    </div>
+
+    <div id="empty-state" class="empty-state hidden">
+      <p>No jobs saved yet.</p>
+      <p class="hint">Click the Munus extension icon on any job posting to save it.</p>
+    </div>
+
+    <div id="table-wrap" class="table-wrap hidden">
+      <table id="jobs-table">
+        <thead>
+          <tr>
+            <th class="check-col"><input type="checkbox" id="select-all" title="Select all"></th>
+            <th data-col="role">Role</th>
+            <th data-col="company">Company</th>
+            <th data-col="deadline">Deadline</th>
+            <th data-col="pay">Pay</th>
+            <th data-col="location">Location</th>
+            <th>Status</th>
+            <th>Apply</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="jobs-body"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Settings">
+      <div class="modal-header">
+        <h2 class="modal-title">Settings</h2>
+        <button id="close-modal" class="modal-close" title="Close">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <p class="settings-section-label">OpenRouter API</p>
+
+        <div class="settings-field">
+          <label for="api-key">API Key</label>
+          <div class="settings-input-wrap">
+            <input id="api-key" type="password" placeholder="sk-or-..." autocomplete="off" spellcheck="false">
+            <button id="toggle-key" type="button" class="toggle-btn">Show</button>
+          </div>
+          <p class="settings-hint">Get your key at <span class="link-hint">openrouter.ai/keys</span></p>
+        </div>
+
+        <div class="settings-field">
+          <label for="model">Model</label>
+          <input id="model" type="text" placeholder="openai/gpt-4o-mini" autocomplete="off" spellcheck="false">
+          <p class="settings-hint">Any OpenRouter model slug. Defaults to <code>openai/gpt-4o-mini</code> if blank.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="save-settings-btn" class="modal-save-btn">Save</button>
+        <span id="settings-save-status" class="save-status"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="jobs.js"></script>
+</body>
+</html>

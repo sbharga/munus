@@ -1,0 +1,566 @@
+:root {
+  --bg: #0f0f1a;
+  --surface: #1a1a2e;
+  --surface2: #16162a;
+  --border: #2a2a4a;
+  --text: #e0e0f0;
+  --muted: #6b7280;
+  --accent: #4ade80;
+
+  --status-saved: #6b7280;
+  --status-applied: #f59e0b;
+  --status-interviewing: #3b82f6;
+  --status-offered: #22c55e;
+  --status-rejected: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+
+.job-count {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+main {
+  padding: 20px 24px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.empty-state .hint {
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+tbody tr:hover {
+  background: var(--surface2);
+}
+
+tbody td {
+  padding: 9px 12px;
+  vertical-align: middle;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-cell {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.company-cell {
+  color: var(--text);
+}
+
+.mono {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.apply-cell,
+.delete-cell {
+  text-align: center;
+  width: 40px;
+}
+
+.apply-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+
+.apply-link:hover {
+  opacity: 0.7;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.delete-btn:hover {
+  color: var(--status-rejected);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Status select */
+.status-select {
+  border: none;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  min-width: 96px;
+}
+
+.status-select.status-saved {
+  background: rgba(107, 114, 128, 0.15);
+  color: var(--status-saved);
+}
+
+.status-select.status-applied {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--status-applied);
+}
+
+.status-select.status-interviewing {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--status-interviewing);
+}
+
+.status-select.status-offered {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--status-offered);
+}
+
+.status-select.status-rejected {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--status-rejected);
+}
+
+.status-select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.delete-selected-btn {
+  padding: 7px 12px;
+  background: transparent;
+  border: 1px solid #ef4444;
+  border-radius: 6px;
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.delete-selected-btn:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+.check-col {
+  width: 36px;
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+  accent-color: var(--accent);
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+}
+
+.filter-bar input[type="search"] {
+  flex: 1;
+  padding: 7px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.filter-bar input[type="search"]:focus {
+  border-color: var(--accent);
+}
+
+.filter-bar input[type="search"]::placeholder {
+  color: var(--muted);
+}
+
+.filter-bar select {
+  padding: 7px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.filter-bar select:focus {
+  border-color: var(--accent);
+}
+
+/* Sortable column headers */
+th[data-col] {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+}
+
+th[data-col]:hover {
+  color: var(--text);
+}
+
+th[data-col][data-dir="asc"]::after {
+  content: ' ▲';
+  font-size: 9px;
+  color: var(--accent);
+}
+
+th[data-col][data-dir="desc"]::after {
+  content: ' ▼';
+  font-size: 9px;
+  color: var(--accent);
+}
+
+/* Inline editable cells */
+.editable-cell {
+  cursor: text;
+  transition: background 0.1s;
+}
+
+.editable-cell:hover {
+  background: rgba(74, 222, 128, 0.05);
+}
+
+.inline-edit {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  color: var(--text);
+  font-size: 13px;
+  padding: 2px 6px;
+  outline: none;
+  font-family: inherit;
+}
+
+/* Apply cell edit button */
+.apply-cell {
+  white-space: nowrap;
+}
+
+.apply-edit-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0 0 0 5px;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+  vertical-align: middle;
+}
+
+.apply-cell:hover .apply-edit-btn,
+tr:hover .apply-edit-btn {
+  opacity: 1;
+}
+
+.apply-edit-btn:hover {
+  color: var(--accent);
+}
+
+/* Header right side */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  line-height: 1;
+}
+
+.icon-btn:hover {
+  color: var(--text);
+}
+
+/* Settings modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 420px;
+  max-width: calc(100vw - 40px);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 7px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.modal-body {
+  padding: 20px 22px;
+}
+
+.settings-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.settings-field {
+  margin-bottom: 18px;
+}
+
+.settings-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.settings-input-wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.settings-field input[type="text"],
+.settings-field input[type="password"] {
+  flex: 1;
+  width: 100%;
+  padding: 8px 11px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.settings-field input:focus {
+  border-color: var(--accent);
+}
+
+.settings-field input::placeholder {
+  color: var(--muted);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.toggle-btn {
+  padding: 8px 13px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.toggle-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.settings-hint {
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.link-hint {
+  color: var(--accent);
+}
+
+code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(74, 222, 128, 0.1);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+}
+
+.modal-save-btn {
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #0f0f1a;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.modal-save-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.modal-save-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.save-status {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.save-status.success {
+  color: var(--accent);
+}
+
+.save-status.error {
+  color: #ef4444;
+}
