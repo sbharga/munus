@@ -13,6 +13,7 @@
     </div>
     <div class="header-right">
       <span id="job-count" class="job-count"></span>
+      <button id="open-new-job" class="new-job-btn">+ New Job</button>
       <button id="open-settings" class="icon-btn" title="Settings">&#9881;</button>
     </div>
   </header>
@@ -55,6 +56,57 @@
       </table>
     </div>
   </main>
+
+  <div id="new-job-modal" class="modal-overlay hidden">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Add Job">
+      <div class="modal-header">
+        <h2 class="modal-title">Add Job</h2>
+        <button id="close-new-job" class="modal-close" title="Close">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="settings-field">
+            <label for="nj-role">Role <span class="required">*</span></label>
+            <input id="nj-role" type="text" placeholder="Software Engineer">
+          </div>
+          <div class="settings-field">
+            <label for="nj-company">Company <span class="required">*</span></label>
+            <input id="nj-company" type="text" placeholder="Acme Corp">
+          </div>
+          <div class="settings-field">
+            <label for="nj-location">Location</label>
+            <input id="nj-location" type="text" placeholder="Remote">
+          </div>
+          <div class="settings-field">
+            <label for="nj-pay">Pay</label>
+            <input id="nj-pay" type="text" placeholder="$80k–$120k/yr">
+          </div>
+          <div class="settings-field">
+            <label for="nj-deadline">Deadline</label>
+            <input id="nj-deadline" type="text" placeholder="Jan 31, 2025">
+          </div>
+          <div class="settings-field">
+            <label for="nj-apply-url">Apply URL</label>
+            <input id="nj-apply-url" type="text" placeholder="https://...">
+          </div>
+        </div>
+        <div class="settings-field">
+          <label for="nj-status">Status</label>
+          <select id="nj-status">
+            <option value="saved">Saved</option>
+            <option value="applied">Applied</option>
+            <option value="interviewing">Interviewing</option>
+            <option value="offered">Offered</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="save-new-job-btn" class="modal-save-btn">Add Job</button>
+        <span id="new-job-error" class="save-status error"></span>
+      </div>
+    </div>
+  </div>
 
   <div id="settings-modal" class="modal-overlay hidden">
     <div class="modal" role="dialog" aria-modal="true" aria-label="Settings">

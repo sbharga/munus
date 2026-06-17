@@ -18,6 +18,9 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     case 'UPDATE_JOB':
       handleUpdateJob(message.id, message.fields).then(sendResponse);
       return true;
+    case 'CREATE_JOB':
+      handleCreateJob(message.job).then(sendResponse);
+      return true;
     case 'DELETE_JOB':
       handleDeleteJob(message.id).then(sendResponse);
       return true;
@@ -147,6 +150,13 @@ async function handleUpdateJob(id, fields) {
   const idx = jobs.findIndex(j => j.id === id);
   if (idx === -1) return { success: false };
   Object.assign(jobs[idx], fields);
+  await saveJobs(jobs);
+  return { success: true };
+}
+
+async function handleCreateJob(job) {
+  const jobs = await getJobs();
+  jobs.unshift(job);
   await saveJobs(jobs);
   return { success: true };
 }

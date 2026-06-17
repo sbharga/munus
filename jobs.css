@@ -367,6 +367,22 @@ tr:hover .apply-edit-btn {
   gap: 14px;
 }
 
+.new-job-btn {
+  padding: 6px 13px;
+  background: var(--accent);
+  color: #0f0f1a;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.new-job-btn:hover {
+  opacity: 0.85;
+}
+
 .icon-btn {
   background: none;
   border: none;
@@ -435,6 +451,33 @@ tr:hover .apply-edit-btn {
 
 .modal-body {
   padding: 20px 22px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.modal-body select {
+  width: 100%;
+  padding: 8px 11px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.modal-body select:focus {
+  border-color: var(--accent);
+}
+
+.required {
+  color: #ef4444;
 }
 
 .settings-section-label {

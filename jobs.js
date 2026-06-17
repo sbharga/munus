@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initFilters();
   initSortHeaders();
   initSelectAll();
+  initNewJobModal();
   initSettingsModal();
   render();
 });
@@ -306,6 +307,67 @@ function updateSelectionUI() {
       selectAllEl.checked = false;
       selectAllEl.indeterminate = true;
     }
+  }
+}
+
+function initNewJobModal() {
+  const modal = document.getElementById('new-job-modal');
+  const openBtn = document.getElementById('open-new-job');
+  const closeBtn = document.getElementById('close-new-job');
+  const saveBtn = document.getElementById('save-new-job-btn');
+  const errorEl = document.getElementById('new-job-error');
+
+  const f = {
+    role:     document.getElementById('nj-role'),
+    company:  document.getElementById('nj-company'),
+    location: document.getElementById('nj-location'),
+    pay:      document.getElementById('nj-pay'),
+    deadline: document.getElementById('nj-deadline'),
+    applyUrl: document.getElementById('nj-apply-url'),
+    status:   document.getElementById('nj-status'),
+  };
+
+  openBtn.addEventListener('click', () => {
+    Object.values(f).forEach(el => { el.tagName === 'SELECT' ? el.value = 'saved' : el.value = ''; });
+    errorEl.textContent = '';
+    modal.classList.remove('hidden');
+    f.role.focus();
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+  });
+
+  saveBtn.addEventListener('click', async () => {
+    const role = f.role.value.trim();
+    const company = f.company.value.trim();
+    if (!role || !company) {
+      errorEl.textContent = 'Role and company are required.';
+      return;
+    }
+    const id = crypto.randomUUID();
+    const job = {
+      id,
+      url: `manual:${id}`,
+      savedAt: new Date().toISOString(),
+      status: f.status.value,
+      role,
+      company,
+      location: f.location.value.trim() || null,
+      pay:      f.pay.value.trim() || null,
+      deadline: f.deadline.value.trim() || null,
+      applyUrl: f.applyUrl.value.trim() || null,
+    };
+    await chrome.runtime.sendMessage({ type: 'CREATE_JOB', job });
+    allJobs.unshift(job);
+    closeModal();
+    render();
+  });
+
+  function closeModal() {
+    modal.classList.add('hidden');
   }
 }
 
